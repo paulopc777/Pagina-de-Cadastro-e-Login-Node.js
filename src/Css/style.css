@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #311FA6;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #4227F2;
+    padding: 1rem;
+    border-radius: 2rem;
+    color: rgb(5, 5, 5);
+}
+
+.content {
+    margin-top: 1rem;
+}
+
+input[type=button],
+input[type=submit] {
+    padding: 0.4rem;
+    transition: 1s;
+    border: solid 5px #F2522E;
+    border-radius: 1rem;
+}
+
+input[type=submit]:active {
+    background-image: linear-gradient(90deg, #F2B84B, #F2B84B);
+}
+
+label {
+    cursor: pointer;
+    /* Style as you please, it will become the visible UI component. */
+ }
+ input[type='file'] {
+    color: rgb(23, 85, 139);
+  }
+ 
+ .upload-photo {
+    width: 300;
+ }
