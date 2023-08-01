@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="w-50 hfull">
+            <hr class=" m-0 border border-primary border-3 opacity-75">
+            <h1 class="text-center">Cadastro</h1>
+            <hr class=" mt-0 border border-primary border-3 opacity-75">
+        <form action="/Cadastrar" method="post" class="d-flex align-items-center justify-content-center grid gap-3 flex-column">
+            <section>
+                <label for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" autocomplete="nome" required autofocus>
+            </section>
+            <section>
+                <label for="username">Email</label>
+                <input id="email" name="email" type="text" autocomplete="email" required autofocus>
+            </section>
+            <section>
+                <label for="senha">Password</label>
+                <input id="senha" name="senha" type="password" autocomplete="password" required>
+            </section>
+            <button type="submit" class="btn btn-outline-success btn-sm">Cadastro</button>
+        </form>
+        <hr class="border border-primary border-3 opacity-75">
+            <div class="d-flex justify-content-center grid gap-3">
+                <hr class="border border-primary border-3 opacity-75">
+                <a href="/Login" class="ml-4">Login</a>
+                <a href="/List">Liatar Usuarrios</a>
+                <hr class="border border-primary border-3 opacity-75">
+            </div>
+            <hr class=" mt-0 border border-primary border-3 opacity-75">
+    </div>
+    </div>
+</body>
+
+</html>

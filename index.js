@@ -1,62 +1,82 @@
-    //Modulos
 const express = require('express');
-const app = express();
-const path = require('path');
+const app = express()
+const bodyParser = require('body-parser')
+const path = require('path')
+const cookieParser = require("cookie-parser");
 const multer = require("multer");
-const fs = require('fs');
 const storage = require('./Modules/RenameFiles');
-app.use(express.static(__dirname + '/src'));
-app.use(express.static(__dirname + '/src/html'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const Auth = require('./Modules/Auth')
+const Ferifyauth = require('./Modules/VerificarAuth')
+const database = require('./db/db')
+const User = require('./Model/Usuarios')
+const UserControle = require("./controller/UserControle");
+
+//Conecta no banco de Dados
+try{
+    database.sync().then(() =>{
+    })
+}catch(err){
+    console.log('erro',err)
+}
+//Rota Publica
+app.use(express.static('public'));
+//Json no express
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+//User o Cokie parse
+app.use(cookieParser())
+//Usar EJS
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 
 
-var passport = require('passport');
-require('./Routes/auth')
-
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
-  }));
-app.use(require('cookie-parser')());
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(require('express-session')({ secret: '123', resave: true, saveUninitialized: true }));
-
-
-
-//Rota Pincipal
-app.get('/' ,function(req, res) {
-        res.sendFile(path.join(__dirname + '/src/html' + '/index.html'));
+app.get('/', (req, res) => {
+    res.redirect('/login')
 })
+app.get('/login', function (req, res) {
+    res.render('index')
+});
 
-app.post('/login',passport.authenticate('local', { 
-    failureRedirect: '/naofoi' 
-}),(req,res) =>{
-    res.sendFile(path.join(__dirname + '/src/html' + '/telapost.html'));
-})
-//Local de Upload de Fotos
-app.get('/post', (req, res) => {
-    res.sendFile(path.join(__dirname + '/src/html' + '/telapost.html'));
-})
-//Muter upload img
+app.post('/login',Auth,(req,res) =>{
+    res.redirect('/Links')
+});
+
+app.get('/Cadastrar',(req,res) =>{
+    res.render('Castro')
+});
+
+app.post("/Cadastrar",UserControle.UserCreate,(req,res) =>{
+    res.redirect('/login')
+});
+
+app.get('/Links',Ferifyauth,(req,res) =>{
+   res.render('Links',{Nome:req.cookies.Logado.nome})
+});
+
+app.get('/Logado',Ferifyauth,(req,res) =>{
+    res.send(req.cookies)
+});
+
+app.get('/nome',(req,res) => {
+    res.send(req.cookies.Logado.Nome)
+});
+
+app.get('/list',UserControle.UserFid);
+
+app.get('/post',Ferifyauth,(req,res) =>{
+    res.render('Telapost')
+});
+
 const upload = multer({ storage });
-//Post de Enviode Foto
-app.post('/post', upload.single('file'), (req, res) => {
-
+app.post('/post',Ferifyauth, upload.single('file'), (req, res) => {
     //Pegando Nome da Imagem
     const NUMBER1 = require('./Modules/RenameFiles');
     //Pintando no Console 
     console.log(`Foi feito upload de arquivo com nome ${NUMBER1}`)
-})
+    res.redirect('/post')
+});
 
-//Porta de Servidor
-const porta = 3000;
-//Start Server
-app.listen(porta, () => {
-    console.log(`Servidor randando na porta ${porta}`)
-})
+app.listen(3000, () => {
+    console.log(`Example app listening on port 3000`)
+});

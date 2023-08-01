@@ -1,0 +1,19 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "Nome":"Usuario1",
+        "img":""
+      },
+      {
+        "id": 2,
+        "Nome":"Usuario2",
+        "img":""
+      },
+      {
+        "id": 3,
+        "Nome": "Paulo",
+        "img":["2", "3", "4"]
+      }
+    ]
+  }
